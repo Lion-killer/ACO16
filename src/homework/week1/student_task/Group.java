@@ -35,25 +35,23 @@ public class Group {
     public boolean addStudent(Student student){
         if (studentsCount == students.length || student == null) return false;
 
-        students[studentsCount] = student;
-        studentsCount++;
+        students[studentsCount++] = student;
         return true;
     }
 
     public boolean delStudent(String name, String surname){
 
-        int indexOfStudent = getIndexOfStudents(name, surname);
+        int indexOfStudent = getIndexOfStudent(name, surname);
         if (indexOfStudent < 0) return false;
 
-        Student[] studentsCopy = new Student[students.length - indexOfStudent];
-        System.arraycopy(students, indexOfStudent + 1, studentsCopy, 0, studentsCopy.length - 1);
-        System.arraycopy(studentsCopy, 0, students, indexOfStudent, studentsCopy.length);
+        students[indexOfStudent] = null;
+        System.arraycopy(students, indexOfStudent + 1, students, indexOfStudent, students.length - indexOfStudent -1);
         studentsCount--;
 
         return true;
     }
 
-    private int getIndexOfStudents(String name, String surname){
+    private int getIndexOfStudent(String name, String surname){
         for (int i = 0; i < students.length; i++) {
             if (students[i].getName().equals(name)&& students[i].getSurname().equals(surname))
                 return i;
@@ -61,7 +59,7 @@ public class Group {
         return -1;
     }
 
-    private int getIndexOfStudents(String name){
+    private int getIndexOfStudent(String name){
         for (int i = 0; i < studentsCount; i++) {
             if (students[i].getName().equals(name))
                 return i;
@@ -70,7 +68,7 @@ public class Group {
     }
 
     public void findStudentByName(String name){
-        int indexOfStudent = getIndexOfStudents(name);
+        int indexOfStudent = getIndexOfStudent(name);
         if (indexOfStudent < 0)
             System.out.printf("Student with name %s not found!\n", name);
         else
