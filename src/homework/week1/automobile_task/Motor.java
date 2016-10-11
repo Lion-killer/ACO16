@@ -5,8 +5,8 @@ package homework.week1.automobile_task;
  */
 public class Motor {
 
-    double motorCapacity;
-    String type;
+    private double motorCapacity;
+    private String type;
 
     public Motor(double motorCapacity, String type) {
         this.motorCapacity = motorCapacity;
@@ -20,4 +20,5 @@ public class Motor {
     public String getType() {
         return type;
     }
+
 }
