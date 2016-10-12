@@ -25,6 +25,7 @@ public class Student {
         return surname;
     }
 
+//   todo method doesn't override Comparable interface in future change it
     public int compareTo(Student student){
         return this.name.compareTo(student.name);
     }

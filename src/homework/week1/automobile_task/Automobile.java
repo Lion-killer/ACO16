@@ -32,7 +32,7 @@ public class Automobile {
     }
 
     private boolean allWheelArePresent(){
-        for (Wheel wheel:wheels) {
+        for (Wheel wheel : wheels) {
             if (wheel == null)
                 return false;
         }
