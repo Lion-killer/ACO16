@@ -67,12 +67,12 @@ public class Group {
         return -1;
     }
 
-    public void findStudentByName(String name){
+    public Student findStudentByName(String name){
         int indexOfStudent = getIndexOfStudent(name);
         if (indexOfStudent < 0)
-            System.out.printf("Student with name %s not found!\n", name);
+            return null;
         else
-            System.out.println(students[indexOfStudent]);
+            return students[indexOfStudent];
     }
 
     public void studentsSorting(){
