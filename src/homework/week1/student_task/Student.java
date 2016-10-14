@@ -3,7 +3,7 @@ package homework.week1.student_task;
 /**
  * Created by gorobec on 08.10.16.
  */
-public class Student {
+public class Student implements Comparable{
 
     private String name;
     private String surname;
@@ -25,9 +25,16 @@ public class Student {
         return surname;
     }
 
-//   todo method doesn't override Comparable interface in future change it
-    public int compareTo(Student student){
-        return this.name.compareTo(student.name);
+    @Override
+    public int compareTo(Object o){
+
+        if (this == o) return 0;
+
+        if (o != null && getClass() != o.getClass()){
+            Student tmp = (Student) o;
+            return this.name.compareTo(tmp.name);
+        }
+        return - 1;
     }
 
     public double getMark() {
@@ -59,4 +66,9 @@ public class Student {
     public String toString(){
         return String.format(" name - %s, surname - %s, average mark - %.2f", name, surname, averageMark);
     }
+
+//    @Override
+//    public int compareTo(Object o) {
+//        return this.co;
+//    }
 }
