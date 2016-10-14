@@ -33,7 +33,10 @@ public class Group {
     }
 
     public boolean addStudent(Student student){
+
         if (studentsCount == students.length || student == null) return false;
+
+        if (getIndexOfStudent(student) != -1) return false;
 
         students[studentsCount++] = student;
         return true;
@@ -51,17 +54,41 @@ public class Group {
         return true;
     }
 
-    private int getIndexOfStudent(String name, String surname){
-        for (int i = 0; i < students.length; i++) {
-            if (students[i].getName().equals(name)&& students[i].getSurname().equals(surname))
+
+
+    public boolean delStudent(Student student){
+
+        int indexOfStudent = getIndexOfStudent(student);
+        if (indexOfStudent < 0) return false;
+
+        students[indexOfStudent] = null;
+        System.arraycopy(students, indexOfStudent + 1, students, indexOfStudent, students.length - indexOfStudent -1);
+        studentsCount--;
+
+        return true;
+    }
+
+
+
+    private int getIndexOfStudent(Student student){
+        for (int i = 0; i < studentsCount; i++) {
+            if (students[i].equals(student))
                 return i;
         }
-        return -1;
+        return - 1;
     }
 
     private int getIndexOfStudent(String name){
         for (int i = 0; i < studentsCount; i++) {
             if (students[i].getName().equals(name))
+                return i;
+        }
+        return -1;
+    }
+
+    private int getIndexOfStudent(String name, String surname){
+        for (int i = 0; i < studentsCount; i++) {
+            if (students[i].getName().equals(name)&& students[i].getSurname().equals(surname))
                 return i;
         }
         return -1;
@@ -106,5 +133,21 @@ public class Group {
             System.out.println(students[i]);
         }
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Group group = (Group) o;
+
+        return name != null ? name.equals(group.name) : group.name == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
     }
 }

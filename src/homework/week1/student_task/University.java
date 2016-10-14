@@ -17,9 +17,12 @@ public class University {
 
 
     public boolean addGroup(Group group){
+
         if(groupCount == groups.length || group == null) return false;
-        groups[groupCount] = group;
-        groupCount++;
+
+        if (getIndexOfGroup(group) != -1) return false;
+
+        groups[groupCount++] = group;
         return true;
     }
 
@@ -43,6 +46,15 @@ public class University {
         }
         return -1;
     }
+
+    private int getIndexOfGroup(Group group){
+        for (int i = 0; i < groupCount; i++) {
+            if (groups[i].equals(group))
+                return i;
+        }
+        return -1;
+    }
+
 
     public void showGroups(){
         for (int i = 0; i < groupCount; i++) {

@@ -39,6 +39,23 @@ public class Student {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Student student = (Student) o;
+
+        if (name != null ? !name.equals(student.name) : student.name != null) return false;
+        return surname != null ? surname.equals(student.surname) : student.surname == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
+
+    @Override
     public String toString(){
         return String.format(" name - %s, surname - %s, average mark - %.2f", name, surname, averageMark);
     }
