@@ -2,7 +2,6 @@ package week2.arrayList;
 
 import homework.week2.MyList;
 import org.junit.*;
-import org.omg.CORBA.Object;
 
 import java.util.ArrayList;
 
@@ -98,8 +97,11 @@ public class MyArrayListTest {
         myArrayList.add("4");
         myArrayList.add("3");
 
-        Assert.assertEquals(4, myArrayList.lastIndexOf("3"));
+        Assert.assertEquals("Test not null", 4, myArrayList.lastIndexOf("3"));
 
+        myArrayList.add(1, null);
+        myArrayList.add(null);
+        Assert.assertEquals("Test not null", 6, myArrayList.lastIndexOf(null));
     }
 
     @Test
@@ -111,7 +113,11 @@ public class MyArrayListTest {
         myArrayList.add("4");
         myArrayList.add("3");
 
-        Assert.assertEquals(true, myArrayList.contains("4"));
+        Assert.assertEquals("Test not null", true, myArrayList.contains("4"));
+
+
+        myArrayList.add(null);
+        Assert.assertEquals("Test null", true, myArrayList.contains(null));
 
     }
 
@@ -124,6 +130,23 @@ public class MyArrayListTest {
         myArrayList.clear();
 
         Assert.assertTrue(myArrayList.isEmpty());
+
+    }
+
+    @Test
+    public void testIndexOf(){
+
+        myArrayList.add("1");
+        myArrayList.add("2");
+        myArrayList.add("3");
+        myArrayList.add("4");
+        myArrayList.add("3");
+
+        Assert.assertEquals("Test not null", 3, myArrayList.indexOf("4"));
+
+
+        myArrayList.add(null);
+        Assert.assertEquals("Test null", 5, myArrayList.indexOf(null));
 
     }
 

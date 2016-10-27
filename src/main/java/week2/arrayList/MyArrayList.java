@@ -7,7 +7,7 @@ import java.util.Arrays;
 /**
  * Created by bilousyv on 16.10.2016.
  */
-public class MyArrayList implements MyList{
+public class MyArrayList implements MyList {
 
     private Object[] elementData;
     private int size;
@@ -18,10 +18,10 @@ public class MyArrayList implements MyList{
     }
 
     public MyArrayList(int capacity) {
-        elementData = new Object[Math.max(capacity, DEFAULT_CAPACITY)];
+        elementData = new Object[capacity];
     }
 
-    public boolean add(Object object){
+    public boolean add(Object object) {
 
         if (size == elementData.length)
             ensureCapacity(size + 1);
@@ -32,7 +32,10 @@ public class MyArrayList implements MyList{
     }
 
     private void ensureCapacity(int newSize) {
-        System.arraycopy(elementData, 0, elementData, 0, newSize);
+
+        int newElementDataSize = (int) (newSize * 1.1); // увеличиваем на 10%
+
+        System.arraycopy(elementData, 0, elementData, 0, newElementDataSize);
     }
 
     @Override
@@ -50,7 +53,7 @@ public class MyArrayList implements MyList{
     }
 
     private void rangeCheck(int index) {
-        if (index > size || index < 0) throw new IndexOutOfBoundsException("Index: "+index+", Size: "+size);
+        if (index > size || index < 0) throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
     }
 
     @Override
@@ -64,15 +67,21 @@ public class MyArrayList implements MyList{
     @Override
     public boolean contains(Object o) {
 
-        for (int i = 0; i < size; i++) {
-            if (o.equals(elementData[i])) return true;
+        if (o == null) {
+            for (int i = 0; i < size; i++) {
+                if (elementData[i] == null) return true;
+            }
+        } else {
+            for (int i = 0; i < size; i++) {
+                if (o.equals(elementData[i])) return true;
+            }
         }
 
         return false;
     }
 
-    public int size(){
-        return this.size;
+    public int size() {
+        return size;
     }
 
     @Override
@@ -87,10 +96,17 @@ public class MyArrayList implements MyList{
 
     @Override
     public int indexOf(Object o) {
-        for (int i = 0; i < size; i++) {
-            if (o.equals(elementData[i])) return i;
+
+        if (o == null) {
+            for (int i = 0; i < size; i++) {
+                if (elementData[i] == null) return i;
+            }
+        } else {
+            for (int i = 0; i < size; i++) {
+                if (o.equals(elementData[i])) return i;
+            }
         }
-        return - 1;
+        return -1;
     }
 
     @Override
@@ -101,13 +117,11 @@ public class MyArrayList implements MyList{
     @Override
     public int lastIndexOf(Object o) {
         if (o == null) {
-            for (int index = size-1; index >= 0; index--)
-                if (elementData[index]==null)
-                    return index;
+            for (int index = size - 1; index >= 0; index--)
+                if (elementData[index] == null) return index;
         } else {
-            for (int index = size-1; index >= 0; index--)
-                if (o.equals(elementData[index]))
-                    return index;
+            for (int index = size - 1; index >= 0; index--)
+                if (o.equals(elementData[index])) return index;
         }
         return -1;
     }
@@ -130,9 +144,7 @@ public class MyArrayList implements MyList{
 
         int elementIndex = indexOf(o);
 
-        if (elementIndex < 0) return false;
-
-        if (elementIndex > 0){
+        if (elementIndex > 0) {
             remove(elementIndex);
             return true;
         }
