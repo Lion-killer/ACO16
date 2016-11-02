@@ -1,27 +1,26 @@
-package week2.arrayList;
-
-import homework.week2.MyList;
+package dataStructures;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
 /**
  * Created by bilousyv on 16.10.2016.
  */
-public class MyArrayList implements MyList {
+public class MyArrayList<T> implements MyList<T> {
 
-    private Object[] elementData;
+    private T[] elementData;
     private int size;
     private static final int DEFAULT_CAPACITY = 10;
 
     public MyArrayList() {
-        elementData = new Object[DEFAULT_CAPACITY];
+        elementData = (T[]) new Object[DEFAULT_CAPACITY];
     }
 
     public MyArrayList(int capacity) {
-        elementData = new Object[capacity];
+        elementData = (T[]) new Object[capacity];
     }
 
-    public boolean add(Object object) {
+    public boolean add(T object) {
 
         if (size == elementData.length)
             ensureCapacity(size + 1);
@@ -34,12 +33,14 @@ public class MyArrayList implements MyList {
     private void ensureCapacity(int newSize) {
 
         int newElementDataSize = (int) (newSize * 1.1); // увеличиваем на 10%
+        T[] newElementData = (T[]) new Object[newElementDataSize];
 
-        System.arraycopy(elementData, 0, elementData, 0, newElementDataSize);
+        System.arraycopy(elementData, 0, newElementData, 0, newSize - 1);
+        elementData = newElementData;
     }
 
     @Override
-    public void add(int index, Object o) {
+    public void add(int index, T o) {
 
         rangeCheck(index);
 
@@ -65,19 +66,8 @@ public class MyArrayList implements MyList {
     }
 
     @Override
-    public boolean contains(Object o) {
-
-        if (o == null) {
-            for (int i = 0; i < size; i++) {
-                if (elementData[i] == null) return true;
-            }
-        } else {
-            for (int i = 0; i < size; i++) {
-                if (o.equals(elementData[i])) return true;
-            }
-        }
-
-        return false;
+    public boolean contains(T o) {
+        return indexOf(o) != -1;
     }
 
     public int size() {
@@ -85,17 +75,17 @@ public class MyArrayList implements MyList {
     }
 
     @Override
-    public Object[] toArray() {
+    public T[] toArray() {
         return Arrays.copyOf(elementData, size);
     }
 
-    public Object get(int index) {
+    public T get(int index) {
         rangeCheck(index);
         return elementData[index];
     }
 
     @Override
-    public int indexOf(Object o) {
+    public int indexOf(T o) {
 
         if (o == null) {
             for (int i = 0; i < size; i++) {
@@ -115,7 +105,7 @@ public class MyArrayList implements MyList {
     }
 
     @Override
-    public int lastIndexOf(Object o) {
+    public int lastIndexOf(T o) {
         if (o == null) {
             for (int index = size - 1; index >= 0; index--)
                 if (elementData[index] == null) return index;
@@ -127,11 +117,11 @@ public class MyArrayList implements MyList {
     }
 
     @Override
-    public Object remove(int index) {
+    public T remove(int index) {
 
         rangeCheck(index);
 
-        Object removedElement = elementData[index];
+        T removedElement = elementData[index];
         int numMoved = size - index - 1;
         if (numMoved > 0)
             System.arraycopy(elementData, index + 1, elementData, index, numMoved);
@@ -140,7 +130,7 @@ public class MyArrayList implements MyList {
     }
 
     @Override
-    public boolean remove(Object o) {
+    public boolean remove(T o) {
 
         int elementIndex = indexOf(o);
 
@@ -153,14 +143,33 @@ public class MyArrayList implements MyList {
     }
 
     @Override
-    public Object set(int index, Object o) {
+    public T set(int index, T o) {
 
         rangeCheck(index);
 
-        Object oldValue = elementData[index];
+        T oldValue = elementData[index];
 
         elementData[index] = o;
 
         return oldValue;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new MyArrayListIterator();
+    }
+
+    private class MyArrayListIterator implements Iterator<T> {
+        private int currentPosition;
+
+        @Override
+        public boolean hasNext() {
+            return currentPosition < size;
+        }
+
+        @Override
+        public T next() {
+            return get(currentPosition++);
+        }
     }
 }

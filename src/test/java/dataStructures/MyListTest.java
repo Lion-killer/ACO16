@@ -1,22 +1,21 @@
-package week2.arrayList;
+package dataStructures;
 
-import homework.week2.MyList;
-import homework.week3.MyLinkedList;
+import dataStructures.MyList;
+import dataStructures.MyLinkedList;
 import org.junit.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by bilousyv on 16.10.2016.
  */
-public class MyListTest {
+public abstract class MyListTest {
 
-    private MyList myList;
+    public MyList<String> myList;
 
     @Before
-    public void init(){
-        myList = new MyLinkedList();
-    }
+    public abstract void init();
 
     @After
     public void tearDown(){
@@ -73,7 +72,7 @@ public class MyListTest {
     @Test
     public void testDeleteElement() {
 
-        ArrayList<Object> testArray = new ArrayList<>(3);
+        ArrayList<Object> testArray = new ArrayList<Object>(3);
         testArray.add("1");
         testArray.add("2");
         testArray.add("4");
@@ -114,9 +113,13 @@ public class MyListTest {
         myList.add("3");
         myList.add("4");
         myList.add("3");
+        myList.add("5");
+        myList.add("6");
+        myList.add("7");
+        myList.add("8");
+        myList.add("9");
 
         Assert.assertEquals("Test not null", true, myList.contains("4"));
-
 
         myList.add(null);
         Assert.assertEquals("Test null", true, myList.contains(null));
@@ -126,8 +129,8 @@ public class MyListTest {
     @Test
     public void testIsEmpty() {
 
-        myList.add(1);
-        myList.add(2);
+        myList.add("1");
+        myList.add("2");
 
         myList.clear();
 
@@ -152,4 +155,36 @@ public class MyListTest {
 
     }
 
+    @Test
+    public void testSetMethod() {
+
+        myList.add("1");
+        myList.add("2");
+        myList.set(0, "10");
+
+        Assert.assertEquals("10", myList.get(0));
+
+    }
+
+    @Test
+    public void testIterator() {
+
+        myList.add("1");
+        myList.add("2");
+        myList.add("3");
+        myList.add("4");
+        myList.add("3");
+
+        Iterator iterator = myList.iterator();
+
+        for (int i = 0; i < myList.size(); i++) {
+            Assert.assertSame(myList.get(i), iterator.next());
+        }
+    }
+
+    @Test
+    public void testIteratorEmpty() {
+        Iterator iterator = myList.iterator();
+        Assert.assertFalse(iterator.hasNext());
+    }
 }
