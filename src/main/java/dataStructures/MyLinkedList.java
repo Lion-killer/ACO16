@@ -38,11 +38,22 @@ public class MyLinkedList<T> implements MyList<T> {
 
         checkIndex(index);
 
-        Node<T> iterator = getNodeByIndex(index);
-
-        Node<T> newNode = new Node<>(iterator, iterator.getPrevious(), o);
-        iterator.getPrevious().setNext(newNode);
-        iterator.setPrevious(newNode);
+        if(tail == null){
+            head = tail = new Node<>(o);
+        } else if (index == 0) {
+            Node<T> newNode = new Node<>(head, null, o);
+            head.setPrevious(newNode);
+            head = newNode;
+        } else if (index == size) {
+            Node<T> newNode = new Node<>(tail, o);
+            tail.setNext(newNode);
+            tail = newNode;
+        } else {
+            Node<T> iterator = getNodeByIndex(index);
+            Node<T> newNode = new Node<>(iterator, iterator.getPrevious(), o);
+            iterator.getPrevious().setNext(newNode);
+            iterator.setPrevious(newNode);
+        }
 
         size++;
     }
@@ -136,12 +147,24 @@ public class MyLinkedList<T> implements MyList<T> {
 
         checkIndex(index);
 
-        Node<T> removedNode = getNodeByIndex(index);
-        Node<T> previousNode = removedNode.getPrevious();
-        Node<T> nextNode = removedNode.getNext();
+        Node<T> removedNode;
 
-        previousNode.setNext(nextNode);
-        nextNode.setPrevious(previousNode);
+        if (head == tail){
+            removedNode = head;
+            clear();
+        } else if (index == 0){
+            removedNode = head;
+            head = head.getNext();
+        } else if (index == size - 1){
+            removedNode = tail;
+            tail = tail.getPrevious();
+        } else {
+            removedNode = getNodeByIndex(index);
+            Node<T> previousNode = removedNode.getPrevious();
+            Node<T> nextNode = removedNode.getNext();
+            previousNode.setNext(nextNode);
+            nextNode.setPrevious(previousNode);
+        }
 
         size--;
 
@@ -152,11 +175,21 @@ public class MyLinkedList<T> implements MyList<T> {
     public boolean remove(T o) {
 
         Node<T> removedNode = getNodeByValue(o);
-        Node<T> previousNode = removedNode.getPrevious();
-        Node<T> nextNode = removedNode.getNext();
 
-        previousNode.setNext(nextNode);
-        nextNode.setPrevious(previousNode);
+        if (removedNode == null) return false;
+
+        if (head == tail) {
+            clear();
+        } else if (removedNode == head) {
+            head = removedNode.getNext();
+        } else if (removedNode == tail) {
+            tail = removedNode.getPrevious();
+        } else {
+            Node<T> previousNode = removedNode.getPrevious();
+            Node<T> nextNode = removedNode.getNext();
+            previousNode.setNext(nextNode);
+            nextNode.setPrevious(previousNode);
+        }
 
         size--;
 
@@ -195,7 +228,7 @@ public class MyLinkedList<T> implements MyList<T> {
 
     private void checkIndex(int index) {
 //        if(index < 0 || index >= size) throw new IndexOutOfBoundsException();
-        if(index < 0 || index >= size) System.exit(-5);
+        if(index < 0 || index > size) System.exit(-5);
     }
 
     @Override

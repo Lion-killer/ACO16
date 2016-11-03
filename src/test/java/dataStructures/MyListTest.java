@@ -54,14 +54,15 @@ public abstract class MyListTest {
     @Test
     public void testMyArrayListAddByIndex(){
 
-        myList.add("1");
+        myList.add(0, "1");
         myList.add("2");
         myList.add("3");
         myList.add("4");
 
         myList.add(2, "10");
+        myList.add(5, "9");
 
-        Assert.assertEquals(5, myList.size());
+        Assert.assertEquals(6, myList.size());
 
         Assert.assertEquals("10", myList.get(2));
 
@@ -70,9 +71,18 @@ public abstract class MyListTest {
     }
 
     @Test
-    public void testDeleteElement() {
+    public void testRemoveElement() {
 
-        ArrayList<Object> testArray = new ArrayList<Object>(3);
+        myList.add("1");
+        myList.add("2");
+        myList.add("3");
+        myList.add("4");
+        Assert.assertTrue("Remove first", myList.remove("1"));
+        Assert.assertTrue("Remove last", myList.remove("4"));
+
+        myList.clear();
+
+        ArrayList<Object> testArray = new ArrayList<>(3);
         testArray.add("1");
         testArray.add("2");
         testArray.add("4");
@@ -86,6 +96,28 @@ public abstract class MyListTest {
 
         Assert.assertArrayEquals(testArray.toArray(), myList.toArray());
 
+    }
+
+    @Test
+    public void testRemoveElementByIndex() {
+
+        myList.add("1");
+        myList.add("2");
+        myList.add("3");
+        myList.add("4");
+        Assert.assertEquals("Remove first", "1", myList.remove(0));
+        Assert.assertEquals("Remove last", "4", myList.remove(2));
+
+    }
+
+    @Test
+    public void testRemoveMissingElement() {
+
+        myList.add("1");
+        myList.add("2");
+        myList.add("3");
+
+        Assert.assertFalse(myList.remove("4"));
     }
 
     @Test
@@ -187,4 +219,5 @@ public abstract class MyListTest {
         Iterator iterator = myList.iterator();
         Assert.assertFalse(iterator.hasNext());
     }
+
 }

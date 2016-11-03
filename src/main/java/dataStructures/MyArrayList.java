@@ -134,7 +134,7 @@ public class MyArrayList<T> implements MyList<T> {
 
         int elementIndex = indexOf(o);
 
-        if (elementIndex > 0) {
+        if (elementIndex > -1) {
             remove(elementIndex);
             return true;
         }
