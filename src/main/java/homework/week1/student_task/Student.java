@@ -3,7 +3,7 @@ package homework.week1.student_task;
 /**
  * Created by gorobec on 08.10.16.
  */
-public class Student implements Comparable{
+public class Student implements Comparable<Student>, Cloneable{
 
     private String name;
     private String surname;
@@ -26,16 +26,17 @@ public class Student implements Comparable{
     }
 
     @Override
-    public int compareTo(Object o){
+    public int compareTo(Student student){
 
-        if (this == o) return 0;
+        if (this == student) return 0;
+        if (student == null) return - 1;
 
-        if (o != null && getClass() != o.getClass()){
-            Student tmp = (Student) o;
-            return this.name.compareTo(tmp.name);
+        int answer = this.name.compareTo(student.name);
+        if (answer == 0){
+            return this.surname.compareTo(student.surname);
         }
         return - 1;
-    }
+     }
 
     public double getMark() {
         return averageMark;
@@ -58,17 +59,13 @@ public class Student implements Comparable{
     }
 
     @Override
-    public int hashCode() {
-        return 0;
-    }
-
-    @Override
     public String toString(){
         return String.format(" name - %s, surname - %s, average mark - %.2f", name, surname, averageMark);
     }
 
-//    @Override
-//    public int compareTo(Object o) {
-//        return this.co;
-//    }
+    @Override
+    public Student clone() throws CloneNotSupportedException {
+        return (Student) super.clone();
+    }
+
 }

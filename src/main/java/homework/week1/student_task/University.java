@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * Created by gorobec on 09.10.16.
  */
-public class University {
+public class University implements Cloneable {
     private String name;
     private Group[] groups;
     private int groupCount;
@@ -14,7 +14,6 @@ public class University {
         this.name = name;
         this.groups = new Group[groupSize];
     }
-
 
     public boolean addGroup(Group group){
 
@@ -55,7 +54,6 @@ public class University {
         return -1;
     }
 
-
     public void showGroups(){
         for (int i = 0; i < groupCount; i++) {
             System.out.printf("%d. - %s\n", i + 1, groups[i].getName());
@@ -91,4 +89,15 @@ public class University {
                 ", groups=" + Arrays.toString(groups) +
                 '}';
     }
+
+    @Override
+    public University clone() throws CloneNotSupportedException {
+        University clone = (University) super.clone();
+        clone.groups = new Group[groupCount];
+        for (int i = 0; i < groupCount; i++) {
+            clone.groups[i] = groups[i].clone();
+        }
+        return clone;
+    }
+
 }
