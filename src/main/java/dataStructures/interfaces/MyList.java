@@ -1,4 +1,4 @@
-package dataStructures;
+package dataStructures.interfaces;
 
 /**
  * Created by bilousyv on 24.10.2016.

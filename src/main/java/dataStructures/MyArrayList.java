@@ -1,5 +1,7 @@
 package dataStructures;
 
+import dataStructures.interfaces.MyList;
+
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -54,7 +56,7 @@ public class MyArrayList<T> implements MyList<T> {
     }
 
     private void rangeCheck(int index) {
-        if (index > size || index < 0) throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+        if (index >= size || index < 0) throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
     }
 
     @Override

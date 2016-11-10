@@ -1,7 +1,6 @@
 package dataStructures;
 
-import dataStructures.MyList;
-import dataStructures.MyLinkedList;
+import dataStructures.interfaces.MyList;
 import org.junit.*;
 
 import java.util.ArrayList;
@@ -218,6 +217,26 @@ public abstract class MyListTest {
     public void testIteratorEmpty() {
         Iterator iterator = myList.iterator();
         Assert.assertFalse(iterator.hasNext());
+    }
+
+    @Test (expected = IndexOutOfBoundsException.class)
+    public void testIndexWrongIndex(){
+
+        myList.get(myList.size());
+
+    }
+
+    @Test
+    public void testIndexWrongIndexDeprecated(){
+
+        try {
+            myList.get(myList.size());
+            Assert.fail();
+        } catch (IndexOutOfBoundsException e){
+            //NOP
+        }
+
+
     }
 
 }
